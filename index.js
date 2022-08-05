@@ -2,7 +2,20 @@ class Account {
 
   constructor(username) {
     this.username = username;
-    this.balance = 0;
+    this.transactions = [];
+  }
+
+  get balance() {
+    let bal = 0;
+    console.log(this.transactions);
+    for (const trans in this.transactions) {
+      bal += trans.amount;
+    }
+    return bal;
+  }
+
+  addTransaction(transaction) {
+    this.transactions.push(transaction);
   }
 }
 
@@ -16,7 +29,8 @@ class Transaction {
   }
 
   commit() {
-    this.account.balance += this.value;
+    this.time = new Date();
+    this.account.addTransaction(this);
   }
 }
 class Withdrawal extends Transaction {
